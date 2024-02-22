@@ -63,6 +63,10 @@ int main(){
         scanf("%d",&arr[i]);
     qsort(arr, n, sizeof(int), cmp);
     if(n==1)    printf("1\n%d\n",arr[0]);
+    else if(n==2){
+        if(arr[1]==arr[0])  printf("1\n%d %d",arr[0],arr[1]);
+        else    printf("2\n%d %d\n%d %d",arr[0],arr[1],arr[1],arr[0]);
+    }
     else{
         int size = 0;
         for(int i=0;i<n;i++){
