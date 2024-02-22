@@ -10,7 +10,7 @@ int cmp(const void *A, const void *B){
     if((a)<(b))   return -1;
     else    return 0;
 }
-void Dfs(int sta, int arr[21],int tmp[21], int storage[20001][21], bool check[21],int ind_arr,int ind_tmp,int len, int* size){
+void Dfs(int sta, int arr[21],int tmp[21], int** storage, bool check[21],int ind_arr,int ind_tmp,int len, int* size){
     if(ind_tmp<len){
         tmp[ind_tmp] = arr[ind_arr];
         //tmp[ind_tmp] = ind_arr;
@@ -52,7 +52,11 @@ void Dfs(int sta, int arr[21],int tmp[21], int storage[20001][21], bool check[21
 
 }
 int main(){
-    int n,arr[21],storage[200001][20],tmp[21];
+    int n,arr[21],tmp[21];
+    int** storage = (int**)malloc(sizeof(int*)*200001);
+    for(int i=0;i<200001;i++){
+        storage[i] = (int*)malloc(sizeof(int*)*21);
+    }
     bool check[21] = {0};
     scanf("%d",&n);
     for(int i=0;i<n;i++)
