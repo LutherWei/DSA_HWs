@@ -11,34 +11,45 @@ int cmp(const void *A, const void *B){
     else    return 0;
 }
 void Dfs(int sta, int arr[21],int tmp[21], int storage[20001][21], bool check[21],int ind_arr,int ind_tmp,int len, int* size){
-    
-    tmp[ind_tmp] = arr[ind_arr];
-    //printf("%d ",tmp[ind_tmp]);
-    check[ind_arr] = 1;
-    if(sta==1){
-        for(int i=ind_arr+1;i<len;i++){
-            if(check[i]==0 && arr[ind_arr]<arr[i]){
-                //printf("kkkk");
-                Dfs(-1,arr,tmp,storage,check,i,ind_tmp+1,len,size);
+    if(ind_tmp<len){
+        tmp[ind_tmp] = arr[ind_arr];
+        //tmp[ind_tmp] = ind_arr;
+        //printf("%d ",tmp[ind_tmp]);
+        check[ind_arr] = 1;
+        if(sta==1){
+            int rec_1[21], ind_1 = 0;
+            for(int i=ind_arr+1;i<len;i++){
+                if(check[i]==0 && arr[ind_arr]<arr[i] ){
+                    //printf("kkkk");
+                    if(ind_1>0 && arr[i]==rec_1[ind_1-1]) continue;
+                    rec_1[ind_1] = arr[i];
+                    ind_1++;
+                    Dfs(-1,arr,tmp,storage,check,i,ind_tmp+1,len,size);
+                }
             }
         }
-    }
-    else{
-        for(int i=0;i<ind_arr;i++){
-            if(check[i]==0 && arr[ind_arr]>arr[i]){
-                //printf("hi");
-                Dfs(1,arr,tmp,storage,check,i,ind_tmp+1,len,size);
+        else{
+            int rec__1[21], ind__1 = 0;
+            for(int i=0;i<ind_arr;i++){
+                if(check[i]==0 && arr[ind_arr]>arr[i] ){
+                    //printf("hi");
+                    if(ind__1>0 && arr[i]==rec__1[ind__1-1])  continue;
+                    rec__1[ind__1] = arr[i];
+                    ind__1++;
+                    Dfs(1,arr,tmp,storage,check,i,ind_tmp+1,len,size);
+                }
             }
         }
-    }
-    if(ind_tmp==len-1){
-        //printf("okok\n");
-        for(int i=0;i<len;i++){
-            storage[(*size)][i] = tmp[i];
+        if(ind_tmp==len-1){
+            //printf("okok\n");
+            for(int i=0;i<len;i++){
+                storage[(*size)][i] = tmp[i];
+                
+            }
+            (*size)++;
         }
-        (*size)++;
+        check[ind_arr] = 0;
     }
-    check[ind_arr] = 0;
 
 }
 int main(){
@@ -52,10 +63,9 @@ int main(){
     else{
         int size = 0;
         for(int i=0;i<n;i++){
-            if(arr[i]!=arr[i-1]){
-                Dfs(-1,arr,tmp,storage,check,i,0,n,&size);
-                Dfs(1,arr,tmp,storage,check,i,0,n,&size);
-            }
+            if(i>0 && arr[i]==arr[i-1]) continue;
+            Dfs(-1,arr,tmp,storage,check,i,0,n,&size);
+            Dfs(1,arr,tmp,storage,check,i,0,n,&size);
         }
 
         printf("%d\n",size);
