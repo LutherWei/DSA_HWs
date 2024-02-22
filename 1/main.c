@@ -44,7 +44,6 @@ void Dfs(int sta, int arr[21],int tmp[21], int storage[20001][21], bool check[21
             //printf("okok\n");
             for(int i=0;i<len;i++){
                 storage[(*size)][i] = tmp[i];
-                
             }
             (*size)++;
         }
@@ -53,7 +52,7 @@ void Dfs(int sta, int arr[21],int tmp[21], int storage[20001][21], bool check[21
 
 }
 int main(){
-    int n,arr[21],storage[20001][21],tmp[21];
+    int n,arr[21],storage[200001][20],tmp[21];
     bool check[21] = {0};
     scanf("%d",&n);
     for(int i=0;i<n;i++)
