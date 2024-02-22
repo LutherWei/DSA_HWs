@@ -62,7 +62,7 @@ int main(){
     for(int i=0;i<n;i++)
         scanf("%d",&arr[i]);
     qsort(arr, n, sizeof(int), cmp);
-    if(n==1)    printf("1\n%d",arr[0]);
+    if(n==1)    printf("1\n%d\n",arr[0]);
     else{
         int size = 0;
         for(int i=0;i<n;i++){
