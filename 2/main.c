@@ -70,38 +70,63 @@ int main(){
                 tail_d->next = head_s;
                 head_s->pre = tail_d;
 
-                sizes[d] += sizes[s];
-                sizes[s] = 0;
             }
+            sizes[d] += sizes[s];
+            sizes[s] = 0;
         }
         else if(t==4){
             int s,d;
             scanf("%d%d",&s,&d);
-            while(!(decks_h[s]->next == decks_t[s] && decks_t[s]->pre == decks_h[s] && decks_h[d]->next == decks_t[d] && decks_t[d]->pre == decks_h[d])){
-                if(decks_h[s]->next != decks_t[s]){
-                    node* tar = decks_t[s]->pre;
-                    decks_t[s]->pre = tar->pre;
-                    decks_t[s]->pre ->next = decks_t[s];
-                    tar->pre = tmp_h;
-                    tmp_h->next->pre = tar;
-                    tar->next = tmp_h->next;
-                    tmp_h->next = tar;
-                }
-                if(decks_h[d]->next != decks_t[d]){
-                    node* tar = decks_t[d]->pre;
-                    decks_t[d]->pre = tar->pre;
-                    decks_t[d]->pre ->next = decks_t[d];
-                    tar->pre = tmp_h;
-                    tmp_h->next->pre = tar;
-                    tar->next = tmp_h->next;
-                    tmp_h->next = tar;
-                }
+            int sum = sizes[s]+sizes[d];
+            while(sizes[s]>0 && sizes[d]>0){
+                node* Tar = decks_t[s]->pre;
+                decks_t[s]->pre = Tar->pre;
+                decks_t[s]->pre ->next = decks_t[s];
+                Tar->pre = tmp_h;
+                tmp_h->next->pre = Tar;
+                Tar->next = tmp_h->next;
+                tmp_h->next = Tar;
+                Tar->next->pre = Tar;
+                sizes[s]--;
+
+                node* tar = decks_t[d]->pre;
+                decks_t[d]->pre = tar->pre;
+                decks_t[d]->pre ->next = decks_t[d];
+                tar->pre = tmp_h;
+                tmp_h->next->pre = tar;
+                tar->next = tmp_h->next;
+                tmp_h->next = tar;
+                tar->next->pre = tar;
+                sizes[d]--;
+            
             }
-            decks_h[d]->next = tmp_h->next;
-            decks_h[d]->next->pre = decks_h[d];
-            tmp_t->pre->next = decks_t[d];
-            decks_t[d]->pre = tmp_t->pre;
-            sizes[d] += sizes[s];
+            if(sizes[s]>0){
+                decks_t[s]->pre->next = tmp_h->next;
+                tmp_h->next = decks_h[s]->next;
+                decks_t[s]->pre->next ->pre = decks_t[s]->pre;
+                decks_h[s]->next->pre = tmp_h;
+                decks_h[s]->next = decks_t[s];
+                decks_t[s]->pre = decks_h[s];
+                sizes[s] = 0;
+            }
+            else if(sizes[d]>0){
+                decks_t[d]->pre->next = tmp_h->next;
+                tmp_h->next = decks_h[d]->next;
+                decks_t[d]->pre->next ->pre = decks_t[d]->pre;
+                decks_h[d]->next->pre = tmp_h;
+                decks_h[d]->next = decks_t[d];
+                decks_t[d]->pre = decks_h[d];
+                sizes[d] = 0;
+            }
+            if(tmp_t->pre!=tmp_h){
+                decks_h[d]->next = tmp_h->next;
+                decks_h[d]->next->pre = decks_h[d];
+                tmp_h->next = tmp_t;
+                tmp_t->pre->next = decks_t[d];
+                decks_t[d]->pre = tmp_t->pre;
+                tmp_t->pre = tmp_h;
+            }
+            sizes[d] = sum;
             sizes[s] = 0;
         }
     }
