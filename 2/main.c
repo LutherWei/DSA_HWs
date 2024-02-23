@@ -57,20 +57,22 @@ int main(){
         else if(t==3){
             int s,d;
             scanf("%d%d",&s,&d);
-            node* head_s = decks_h[s]->next;
-            node* tail_s = decks_t[s]->pre;
-            node* head_d = decks_h[d]->next;
-            node* tail_d = decks_t[d]->pre;
+            if(sizes[s]>0){
+                node* head_s = decks_h[s]->next;
+                node* tail_s = decks_t[s]->pre;
+                node* head_d = decks_h[d]->next;
+                node* tail_d = decks_t[d]->pre;
 
-            tail_s->next = decks_t[d];
-            decks_t[s]->pre = decks_h[s];
-            decks_t[d]->pre = tail_s;
-            decks_h[s]->next = decks_t[s];
-            tail_d->next = head_s;
-            head_s->pre = tail_d;
+                tail_s->next = decks_t[d];
+                decks_t[s]->pre = decks_h[s];
+                decks_t[d]->pre = tail_s;
+                decks_h[s]->next = decks_t[s];
+                tail_d->next = head_s;
+                head_s->pre = tail_d;
 
-            sizes[d] += sizes[s];
-            sizes[s] = 0;
+                sizes[d] += sizes[s];
+                sizes[s] = 0;
+            }
         }
         else if(t==4){
             int s,d;
