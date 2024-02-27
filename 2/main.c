@@ -100,7 +100,19 @@ int main(){
                 sizes[d]--;
             
             }
-            if(sizes[s]>0){
+            int deck_num = -1;
+            if(sizes[s]>0)  deck_num = s;
+            else if(sizes[d]>0) deck_num = d;
+            if(deck_num!=-1){
+                decks_t[deck_num]->pre->next = tmp_h->next;
+                tmp_h->next = decks_h[deck_num]->next;
+                decks_t[deck_num]->pre->next ->pre = decks_t[deck_num]->pre;
+                decks_h[deck_num]->next->pre = tmp_h;
+                decks_h[deck_num]->next = decks_t[deck_num];
+                decks_t[deck_num]->pre = decks_h[deck_num];
+                sizes[deck_num] = 0;
+            }
+            /*if(sizes[s]>0){
                 decks_t[s]->pre->next = tmp_h->next;
                 tmp_h->next = decks_h[s]->next;
                 decks_t[s]->pre->next ->pre = decks_t[s]->pre;
@@ -117,7 +129,7 @@ int main(){
                 decks_h[d]->next = decks_t[d];
                 decks_t[d]->pre = decks_h[d];
                 sizes[d] = 0;
-            }
+            }*/
             if(tmp_t->pre!=tmp_h){
                 decks_h[d]->next = tmp_h->next;
                 decks_h[d]->next->pre = decks_h[d];
